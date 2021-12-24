@@ -1,4 +1,4 @@
-package go_huffman
+package system
 
 import (
 	"fmt"
@@ -14,30 +14,29 @@ const (
 	GiB      = 1 << 10 * MiB
 )
 
-// loop 数据字节长度
 var (
-	bytesize = 1 * GiB
-	bindata  []byte
+	size     = 1 * GiB
+	binBytes []byte
 )
 
 func init() {
 	rand.Seed(time.Now().Unix())
 }
 
-func TestBytes(t *testing.T) {
+func TestBin_Hex(t *testing.T) {
 	_random()
 
-	_hex := bin2hex(bindata)
+	_hex := NewBin(binBytes).Bin2Hex()
 
-	_bin := hex2bin(_hex)
+	_bin := NewHex(_hex).Hex2Bin()
 
-	fmt.Println(_verify(bindata, _bin))
+	fmt.Println(_verify(binBytes, _bin))
 }
 
 func _random() {
-	bindata = make([]byte, bytesize)
-	for i := range bindata {
-		bindata[i] = uint8(rand.Intn(1<<8 - 1))
+	binBytes = make([]byte, size)
+	for i := range binBytes {
+		binBytes[i] = uint8(rand.Intn(1<<8 - 1))
 	}
 }
 
